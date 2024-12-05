@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="EAREG.css" />
+    <title>Educational Assistance</title>
+</head>
+
+<body>
+    <nav>
+        <div class="Logocont">
+            <img src="DSWD.png" alt="" class="DSWDLOGO" />
+        </div>
+        <div class="time">
+            <div id="date-time-container">
+                <div id="date"></div>
+                <label for="">,</label>
+                <div id="time"></div>
+            </div>
+            <script>
+                function updateDateTime() {
+                    const now = new Date();
+                    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+                    const months = [
+                        "January", "February", "March", "April", "May", "June",
+                        "July", "August", "September", "October", "November", "December"
+                    ];
+                    document.getElementById("date").textContent = `${days[now.getDay()]}, ${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
+                    document.getElementById("time").textContent = `${now.getHours().toString().padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}:${now.getSeconds().toString().padStart(2, "0")}`;
+                }
+                updateDateTime();
+                setInterval(updateDateTime, 1000);
+            </script>
+        </div>
+    </nav>
+
+    <div class="maincont">
+        <div class="bcont">
+            <div class="title">
+                <p style="font-size: 26px">EDUCATIONAL ASSISTANCE</p>
+            </div>
+            <div class="title2"><label>REQUIRED DOCUMENT/S</label></div>
+
+            <div class="regcont">
+                <div class="cont">
+                    <div class="inputcont">
+                        <div><input type="text" placeholder="First Name" id="firstname" /></div>
+                        <div>
+                            <input type="text" placeholder="Middle Name" id="middlename" />
+                            <div class="mlabel">
+                                <input type="checkbox" id="nomiddlename" />
+                                <label for="nomiddlename" class="mid">I don't have a middle name</label>
+                            </div>
+                        </div>
+                        <div><input type="text" placeholder="Last Name" id="lastname" /></div>
+                    </div>
+
+                    <div class="inputcont2">
+                        <div><input type="text" placeholder="Phone Number" id="contactNumber" /></div>
+                        <div><input type="text" placeholder="Name of School" id="schoolName" /></div>
+                        <div><input type="text" placeholder="Year Level" id="yearlevel" /></div>
+                    </div>
+
+                    <div class="inputcont3">
+                        <div><input type="text" placeholder="Full Address" id="address" /></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="regcont2">
+                <div class="inputcont4">
+                    <div class="filecontainer">
+                        <div class="fileup">
+                            <input type="file" id="COE" name="COE" />
+                            <label for="COE">Certificate of Enrollment</label>
+                            <p id="fileName" style="margin-top: 10px; color: green;"></p>
+                            <progress id="coeProgress" value="0" max="100" style="display: none; margin-top: 10px;"></progress>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="buttons">
+                <button>Cancel</button>
+                <button onclick="saveResidentData()">Next</button>
+            </div>
+        </div>
+    </div>
+    
+      
+</body>
+
+<footer>
+    <div class="footer">
+        <div class="upper-section">
+          <p>©2024 All Rights Reserved </p>
+        </div>
+    
+        <div class="Lower-section">
+          <div class="first-section">
+            <p>DSWD - FAMS</p>
+          </div>
+          <div class="second-section">
+            <a href="">
+              <p>Home</p>
+            </a>
+            <a href="">
+              <p>About</p>
+            </a>
+            <a href="">
+              <p>Contact</p>
+            </a>
+          </div>
+          <div class="third-section"></div>
+        </div>
+      </div>
+</footer>
+
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyDiOsr6bY5BDKdiBPRzDgSpurHdkkUlc3k",
+        authDomain: "sia101-d60a1.firebaseapp.com",
+        databaseURL: "https://sia101-d60a1-default-rtdb.firebaseio.com",
+        projectId: "sia101-d60a1",
+        storageBucket: "sia101-d60a1.appspot.com",
+        messagingSenderId: "258109532727",
+        appId: "1:258109532727:web:73d735dc749d2cb4ebedb2"
+    };
+
+    const firebaseDatabase = firebase.initializeApp(firebaseConfig);
+    const database = firebaseDatabase.database();
+    const storage = firebase.storage();
+
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const data = Object.fromEntries(urlParams.entries());
+
+    const firstName = document.getElementById("firstname");
+    const middleName = document.getElementById("middlename");
+    const lastName = document.getElementById("lastname");
+    const contactNumber = document.getElementById("contactNumber");
+    const address = document.getElementById("address");
+    const schoolName = document.getElementById("schoolName");
+    const yearLevel = document.getElementById("yearlevel");
+    const coeInput = document.getElementById("COE");
+    const fileNameDisplay = document.getElementById("fileName");
+    const coeProgress = document.getElementById("coeProgress");
+
+    firstName.value = data.firstName || "";
+    middleName.value = data.middleName || "";
+    lastName.value = data.lastName || "";
+    contactNumber.value = data.mobileNumber || "";
+    address.value = (data.address ? `${data.address}, ` : "") + "Old Capitol Site Diliman Quezon City 1101";
+    schoolName.value = data.schoolName || "";
+    yearLevel.value = data.yearLevel || "";
+
+    coeInput.addEventListener("change", async (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            fileNameDisplay.textContent = `Selected file: ${file.name}`;
+            coeProgress.style.display = "block";
+
+            try {
+                const newId = await generateID();
+                const fileRef = storage.ref(`COE/${newId}_${file.name}`);
+                const uploadTask = fileRef.put(file);
+
+                uploadTask.on(
+                    "state_changed",
+                    (snapshot) => {
+                        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                        coeProgress.value = progress;
+                    },
+                    (error) => {
+                        console.error("File upload error:", error);
+                        alert("An error occurred during the upload.");
+                    },
+                    async () => {
+                        const downloadURL = await fileRef.getDownloadURL();
+                        data.coeUrl = downloadURL; // Save URL for later submission
+                        alert("File uploaded successfully!");
+                    }
+                );
+            } catch (error) {
+                console.error("Error uploading file:", error);
+                alert("An error occurred.");
+            }
+        }
+    });
+
+    async function saveResidentData() {
+        const residentId = data.residentId;
+        const newId = await generateID();
+
+        if (!validateFields()) return;
+
+        try {
+            const residentRef = database.ref(`2-Assistance/${newId}`);
+            await residentRef.set({
+                firstName: firstName.value.trim(),
+                middleName: middleName.value.trim(),
+                lastName: lastName.value.trim(),
+                address: address.value.trim(),
+                contactNumber: contactNumber.value.trim(),
+                schoolName: schoolName.value.trim(),
+                yearLevel: yearLevel.value.trim(),
+                coeUrl: data.coeUrl || null,
+                status: "PENDING",
+                type: "EAR",
+            });
+            alert("Request data saved successfully.");
+            window.location.href = "/index.html"; // Redirect to index.html
+        } catch (error) {
+            console.error("Error saving data:", error);
+            alert("An error occurred while saving the resident data.");
+        }
+    }
+
+    function validateFields() {
+        if (
+            !firstName.value.trim() ||
+            !lastName.value.trim() ||
+            !contactNumber.value.trim() ||
+            !schoolName.value.trim() ||
+            !yearLevel.value.trim() ||
+            !data.coeUrl
+        ) {
+            alert("Please fill out all required fields and upload the Certificate of Enrollment.");
+            return false;
+        }
+        return true;
+    }
+
+    async function generateID() {
+        const id = data.residentId || "unknown";
+        let count = 0;
+        try {
+            const assistanceRef = database.ref("2-Assistance");
+            const snapshot = await assistanceRef.once("value");
+            snapshot.forEach((child) => {
+                if (child.key.startsWith(id)) count++;
+            });
+            return `${id}-${1000 + count}`;
+        } catch (error) {
+            console.error("Error generating ID:", error);
+            throw error;
+        }
+    }
+</script>
+
+</html>

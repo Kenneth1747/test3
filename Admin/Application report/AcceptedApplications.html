@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+    rel="stylesheet" />
+    <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet" />
+  <title>Accepted Applications</title>
+</head>
+<body>
+  <style>
+.maincont{
+  width: fit-content;
+  box-shadow: 2px 2px 5px ;
+  height: 700px;
+
+  
+}
+table, th, td,tr {
+  border: 2px solid black;
+}
+th{
+  font-family: 'poppins';
+  font-weight: 500;
+  border: 2px solid black;
+}
+tr,td{
+  padding:10px;
+  border: 2px solid  black;
+text-align: left;
+width: fit-content;
+margin: 20px;
+}
+td{
+  font-family: 'poppins';
+}
+
+  </style>
+
+  <div class="maincont">
+    <h3>Accepted Applications</h3>
+    <table id="accepted-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Last Name</th>
+          <th>First Name</th>
+          <th>Birthdate</th>
+          <th>Accepted At</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Data will be dynamically inserted here -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Firebase Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+
+  <script>
+    // Firebase setup
+    const firebaseConfig = {
+      apiKey: "AIzaSyDiOsr6bY5BDKdiBPRzDgSpurHdkkUlc3k",
+      authDomain: "sia101-d60a1.firebaseapp.com",
+      databaseURL: "https://sia101-d60a1-default-rtdb.firebaseio.com",
+      projectId: "sia101-d60a1",
+      storageBucket: "sia101-d60a1.appspot.com",
+      messagingSenderId: "258109532727",
+      appId: "1:258109532727:web:73d735dc749d2cb4ebedb2",
+    };
+    const firebaseDatabase = firebase.initializeApp(firebaseConfig);
+    const database = firebaseDatabase.database();
+
+
+    // Populate Accepted Applications Table
+    function populateAcceptedTable() {
+      const acceptedTableBody = document.querySelector("#accepted-table tbody");
+      acceptedTableBody.innerHTML = ""; // Clear the table before populating
+
+      const acceptedRef = database.ref("2-Accepted-Applications");
+      acceptedRef.once("value", (snapshot) => {
+        const data = snapshot.val();
+
+        if (!data) {
+          const emptyRow = document.createElement("tr");
+          const emptyCell = document.createElement("td");
+          emptyCell.setAttribute("colspan", 5); // Ensure correct column count
+          emptyCell.textContent = "No accepted applications found.";
+          emptyRow.appendChild(emptyCell);
+          acceptedTableBody.appendChild(emptyRow);
+          return;
+        }
+
+        Object.keys(data).forEach((key) => {
+          const acceptedItem = data[key];
+          const row = document.createElement("tr");
+
+          const idCell = document.createElement("td");
+          idCell.textContent = key;
+
+          const lastNameCell = document.createElement("td");
+          lastNameCell.textContent = acceptedItem.lastName || "N/A";
+
+          const firstNameCell = document.createElement("td");
+          firstNameCell.textContent = acceptedItem.firstName || "N/A";
+
+          const birthdateCell = document.createElement("td");
+          birthdateCell.textContent = acceptedItem.birthdate || "N/A";
+
+          const acceptedAtCell = document.createElement("td");
+          acceptedAtCell.textContent = new Date(acceptedItem.acceptedAt).toLocaleString();
+
+          row.appendChild(idCell);
+          row.appendChild(lastNameCell);
+          row.appendChild(firstNameCell);
+          row.appendChild(birthdateCell);
+          row.appendChild(acceptedAtCell);
+
+          acceptedTableBody.appendChild(row);
+        });
+      });
+    }
+
+    // Call the function to populate the accepted applications table
+    populateAcceptedTable();
+  </script>
+</body>
+</html>

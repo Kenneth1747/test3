@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="reg.css" />
+    <title>Document</title>
+</head>
+
+<body>
+    <nav>
+        <div class="Logocont">
+            <img src="DSWD.png" alt="" class="DSWDLOGO" />
+        </div>
+        <div class="time">
+            <div id="date-time-container">
+                <div id="date"></div>
+                <label for="">,</label>
+                <div id="time"></div>
+            </div>
+
+            <script>
+                function updateDateTime() {
+                    const now = new Date();
+                    const days = [
+                        "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday",
+                    ];
+                    const months = [
+                        "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December",
+                    ];
+                    const day = days[now.getDay()];
+                    const month = months[now.getMonth()];
+                    const date = now.getDate();
+                    const year = now.getFullYear();
+                    const dateString = `${day}, ${month} ${date}, ${year}`;
+
+                    const hours = String(now.getHours()).padStart(2, "0");
+                    const minutes = String(now.getMinutes()).padStart(2, "0");
+                    const seconds = String(now.getSeconds()).padStart(2, "0");
+                    const timeString = `${hours}:${minutes}:${seconds}`;
+
+                    document.getElementById("date").textContent = dateString;
+                    document.getElementById("time").textContent = timeString;
+                }
+
+                updateDateTime();
+                setInterval(updateDateTime, 1000);
+            </script>
+        </div>
+    </nav>
+
+    <div class="maincont">
+        <div class="bcont">
+            <div class="title">
+                <p style="font-size: 26px">AICS</p>
+            </div>
+            <div class="title2"><label>REQUIRED DOCUMENT/S</label></div>
+
+            <div class="regcont">
+                <div class="cont">
+                    <div class="inputcont">
+                        <div>
+                            <input type="text" placeholder="First Name" id="firstname" />
+                        </div>
+                        <div>
+                            <input type="text" placeholder="Middle Name" id="middlename" />
+                            <div class="mlabel">
+                                <input type="checkbox" id="nomiddlename" for="Mname" />
+                                <label for="nomiddlename" class="mid">I don't have a middle name</label>
+                            </div>
+                        </div>
+                        <div>
+                            <input type="text" placeholder="Last Name" id="lastname" />
+                        </div>
+                    </div>
+
+                    <div class="inputcont2">
+                        <div>
+                            <input type="text" placeholder="Full Address" id="address" />
+                        </div>
+                    </div>
+
+                    <div class="inputcont3">
+                        <div>
+                            <input type="text" placeholder="Phone Number" id="contactNumber" />
+                        </div>
+                        <div>
+                            <input type="text" placeholder="Precinct Number" id="precinct" />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="regcont2">
+                <div class="inputcont4">
+                    <div class="DocButton">
+                        <div class="filecontainer">
+                            <div class="fileup">
+                                <input type="file" id="ValidID" name="VALIDID" onchange="updateFileName()"> 
+                                <label for="ValidID">Valid ID</label>
+                            </div>
+                        </div>
+                        <div id="fileName" style="margin-top: 10px;"></div> <!-- Display the file name here -->
+
+                        <div id="uploadProgress" style="display:none; margin-top: 10px;">
+                            <label for="progress">Upload Progress: </label>
+                            <progress id="progress" value="0" max="100"></progress>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="buttons">
+                <button>Cancel</button><button onclick="saveResidentData()">Next</button>
+            </div>
+        </div>
+    </div>
+    <footer></footer>
+</body>
+
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyDiOsr6bY5BDKdiBPRzDgSpurHdkkUlc3k",
+        authDomain: "sia101-d60a1.firebaseapp.com",
+        databaseURL: "https://sia101-d60a1-default-rtdb.firebaseio.com",
+        projectId: "sia101-d60a1",
+        storageBucket: "sia101-d60a1.appspot.com",
+        messagingSenderId: "258109532727",
+        appId: "1:258109532727:web:73d735dc749d2cb4ebedb2"
+    };
+
+    const firebaseDatabase = firebase.initializeApp(firebaseConfig);
+    const database = firebaseDatabase.database();
+
+    const queryString = window.location.search;
+    const urlParameter = new URLSearchParams(queryString);
+    const data = Object.fromEntries(urlParameter.entries());
+
+    const firstName = document.getElementById('firstname');
+    const middleName = document.getElementById('middlename');
+    const lastName = document.getElementById('lastname');
+    const contactNumber = document.getElementById('contactNumber');
+    const address = document.getElementById('address');
+    const precinctNumber = document.getElementById('precinct');
+
+    firstName.value = data.firstName;
+    middleName.value = data.middleName;
+    lastName.value = data.lastName;
+    contactNumber.value = data.mobileNumber;
+    address.value = data.address + "Old Capitol Site Diliman Quezon City 1101";
+
+    let validIDFile;
+
+    // Function to display file name when a file is selected
+    function updateFileName() {
+        validIDFile = document.getElementById("ValidID").files[0];
+        if (validIDFile) {
+            document.getElementById("fileName").textContent = "Selected file: " + validIDFile.name;
+        }
+    }
+
+    async function saveResidentData() {
+        const residentId = data.residentId;
+        const newId = await generateID();
+
+        if (!residentId) {
+            alert("Resident ID is required.");
+            return;
+        }
+
+        // Check if a file is selected
+        if (validIDFile) {
+            try {
+                // Show the progress bar and start uploading
+                document.getElementById("uploadProgress").style.display = "block";
+                const storageRef = firebase.storage().ref();
+                const fileRef = storageRef.child('valid_ids/' + newId + '_' + validIDFile.name);
+                
+                // Upload file and track progress
+                const uploadTask = fileRef.put(validIDFile);
+                uploadTask.on('state_changed', (snapshot) => {
+                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    document.getElementById("progress").value = progress;
+                });
+
+                uploadTask.then(async () => {
+                    const fileURL = await fileRef.getDownloadURL();
+
+                    // Save the resident data and the file URL to Realtime Database
+                    const residentRef = database.ref("2-Assistance/" + newId);
+                    await residentRef.set({
+                        firstName: firstName.value.trim(),
+                        middleName: middleName.value.trim(),
+                        lastName: lastName.value.trim(),
+                        address: address.value.trim(),
+                        contactNumber: contactNumber.value.trim(),
+                        precinctNumber: precinctNumber.value.trim(),
+                        status: "PENDING",
+                        type: "AICS",
+                        validIDUrl: fileURL // Store the file URL in Realtime Database
+                    });
+
+                    alert("Request data saved successfully.");
+                    window.location.href = "/index.html"; // Redirect to index.html
+                    
+                    alert("Request data saved successfully.");
+                }).catch((error) => {
+                    console.error("Error uploading file:", error);
+                    alert("An error occurred while uploading the file.");
+                });
+
+            } catch (error) {
+                console.error("Error saving data:", error);
+                alert("An error occurred while saving the resident data.");
+            }
+        } else {
+            alert("Please upload a valid ID.");
+        }
+    }
+
+    async function generateID() {
+        const id = data.residentId;
+        let count = 0;
+
+        try {
+            const assistanceRef = database.ref("2-Assistance");
+            const snapshot = await assistanceRef.once('value');
+            snapshot.forEach((child) => {
+                if (child.key.startsWith(id)) {
+                    count++;
+                }
+            });
+            return id + "-" + (1000 + count);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    }
+</script>
+
+</html>

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="Usermanagement.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet" />
+  <title>User Management</title>
+</head>
+
+<body>
+  <div class="maincont">
+    <div class="nav">
+      <div class="imagecont">
+        <img src="/Images/DSWD-Logo-Icon.png" alt="" />
+      </div>
+
+      <div class="links">
+        <ul>
+          <li class="Dashboard">
+            <a href="../dashboards/Dashboard.html">
+              <div>
+                <img src="../Admin imgs/icons8-dashboard-48.png" alt="" />
+                <label for="">Dashboard</label>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="../Activity log/ActivityLog.html">
+              <div>
+                <img src="../Admin imgs/icons8-verified-account-48.png" alt="" />
+                <label for="">Activity Log</label>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="../Application report/Applicationreport.html">
+              <div>
+                <img src="../Admin imgs/icons8-system-task-48.png" alt="" />
+                <label for="">Application report</label>
+              </div>
+            </a>
+          </li>
+          <li class="highlight">
+            <a href="../UserManagement/Usernanagement.html">
+              <div>
+                <img src="../Admin imgs/icons8-user-secured-48.png" alt="" />
+                <label for="">User Management</label>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="/Admin/Payout Schedule/PayoutSchedule.html">
+              <div>
+                <img src="../Admin imgs/icons8-system-task-48.png" alt="" />
+                <label for="">Payout Schedule</label>
+              </div>
+            </a>
+          </li>
+
+          <li>
+            <div class="dd">
+              <img src="../Admin imgs/icons8-settings-48.png" alt="" /><label
+                for=""> Settings</label>
+
+              <div class="dropdown-content">
+                <div>
+                  <a href="../Setting/PersonalDetails.html">Personal Details</a><br />
+                </div>
+                <div>
+                  <a href="../Setting/Aboutus.html">About Us</a><br />
+                </div>
+                <div>
+                  <a href="../Setting/Securitypolicy.html">Security Policy</a>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="logout">
+        <div>
+          <img src="../Admin imgs/icons8-logout-32.png" alt="" /><label for="">
+            Logout</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="parent-cardcont">
+      <div class="title">
+        <div class="childtitle">
+          <p>USER MANAGEMENT</p>
+        </div>
+        <div class="button">
+          <div>
+            <p>Admin</p>
+          </div>
+          <div class="buttonimg">
+            <img src="../Admin imgs/icons8-admin-26.png" alt="" />
+          </div>
+        </div>
+      </div>
+    
+        <div class="search-container">
+          <!-- Search icon -->
+          <img src="../Admin imgs/icons8-search-50.png" alt="Search Icon" class="search-icon" />
+
+          <!-- Search input field -->
+          <input type="text" class="search-input" placeholder="Search..." />
+        </div>
+
+    
+   
+      <div class="card-container">
+        <div class="overflowcont">
+          <!-- Account Creation Form -->
+          <div class="form-cont">
+            <h2>Create New User</h2>
+            <form id="createAccountForm">
+              <div class="flex-container">
+              <div class="input">
+                <label for="name">Staff Name</label>
+                <input type="text" id="name" placeholder="Enter staff name" required />
+              </div>
+              <div class="input">
+                <label for="staffId">Staff ID</label>
+                <input type="text" id="staffId" placeholder="Enter staff ID" required />
+              </div>
+            </div>
+            <div class="flex-container">
+              <div class="input">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" placeholder="Enter email" required />
+              </div>
+              <div class="input">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter temporary password" required />
+              </div>
+          
+                <div class="input">
+                  <label for="confirmPassword">Confirm Password</label>
+                  <input type="password" id="confirmPassword" placeholder="Confirm password" required />
+                </div>
+            
+              
+            </div>
+              <div class="input">
+                <label for="role">Select Role</label>
+                <select id="role" required>
+                  <option value="staff">Staff</option>
+                  <option value="admin">Admin</option>
+                </select>
+              </div>
+              <button type="submit">Create Account</button>
+            </form>
+          </div>
+
+          <!-- User List Table -->
+          <div class="table-cont">
+            <h2>Existing Users</h2>
+            <table class="request-table">
+              <thead>
+                <tr>
+                  <th>Email</th>
+                  <th>Name</th>
+                  <th>Role</th>
+                  <th>aaa</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="userTable">
+                <!-- User list will populate here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="upper-section">
+      <p>©2024 All Rights Reserved </p>
+    </div>
+
+    <div class="Lower-section">
+
+      <div class="first-section">
+        <p>DSWD - FAMS</p>
+      </div>
+      <div class="second-section">
+        <a href="">
+          <p>Home</p>
+        </a>
+        <a href="C:\Users\63956\Downloads\PProj\Admin\Setting\Aboutus.html">
+          <p>About</p>
+        </a>
+        <a href="">
+          <p>Contact</p>
+        </a>
+      </div>
+      <div class="third-section">
+
+      </div>
+    </div>
+  </div>
+  <!-- Firebase Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDiOsr6bY5BDKdiBPRzDgSpurHdkkUlc3k",
+      authDomain: "sia101-d60a1.firebaseapp.com",
+      databaseURL: "https://sia101-d60a1-default-rtdb.firebaseio.com",
+      projectId: "sia101-d60a1",
+      storageBucket: "sia101-d60a1.appspot.com",
+      messagingSenderId: "258109532727",
+      appId: "1:258109532727:web:73d735dc749d2cb4ebedb2"
+    };
+  
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const database = firebase.database();
+  
+    // Account Creation Function with Confirm Password Validation
+    document.getElementById("createAccountForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+  
+      const name = document.getElementById("name").value.trim();
+      const staffId = document.getElementById("staffId").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const confirmPassword = document.getElementById("confirmPassword").value.trim(); // Get confirm password value
+      const role = document.getElementById("role").value;
+  
+      // Password validation
+      if (password !== confirmPassword) {
+        alert("Passwords do not match!");
+        return;
+      }
+  
+      try {
+        // Firebase Authentication: Create user
+        const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+        const user = userCredential.user;
+  
+        // Save user details (including name and staffId) in Firebase Realtime Database
+        await database.ref("2-Users/" + user.uid).set({
+          email: email,
+          role: role,
+          name: name,
+          staffId: staffId,
+          lastLogin: new Date().toISOString(), // Store the current login time
+          online: true // Set online status to true when account is created
+        });
+  
+        alert("User created successfully!");
+        document.getElementById("createAccountForm").reset(); // Clear form
+        loadUsers(); // Refresh user list
+      } catch (error) {
+        console.error("Error creating user:", error);
+        alert("Error creating account. " + error.message);
+      }
+    });
+  
+    // Load Users into the Table with Last Login and Online Status
+    async function loadUsers() {
+      const userTable = document.getElementById("userTable");
+      userTable.innerHTML = ""; // Clear table
+  
+      try {
+        const snapshot = await database.ref("2-Users").once("value");
+        if (snapshot.exists()) {
+          const users = snapshot.val();
+          Object.keys(users).forEach((uid) => {
+            const user = users[uid];
+            const row = document.createElement("tr");
+  
+            const emailCell = document.createElement("td");
+            emailCell.textContent = user.email;
+  
+            const nameCell = document.createElement("td");
+            nameCell.textContent = user.name;
+  
+            const roleCell = document.createElement("td");
+            roleCell.textContent = user.role;
+  
+            const lastLoginCell = document.createElement("td");
+            lastLoginCell.textContent = user.lastLogin ? new Date(user.lastLogin).toLocaleString() : "N/A";
+  
+            const onlineCell = document.createElement("td");
+            onlineCell.textContent = user.online ? "Online" : "Offline";
+  
+            row.appendChild(emailCell);
+            row.appendChild(nameCell);
+            row.appendChild(roleCell);
+            row.appendChild(lastLoginCell);
+            row.appendChild(onlineCell);
+  
+            userTable.appendChild(row);
+          });
+        } else {
+          const row = document.createElement("tr");
+          const cell = document.createElement("td");
+          cell.setAttribute("colspan", 5); // Adjust to match the number of table columns
+          cell.textContent = "No users found.";
+          row.appendChild(cell);
+          userTable.appendChild(row);
+        }
+      } catch (error) {
+        console.error("Error loading users:", error);
+      }
+    }
+  
+    // Load users on page load
+    loadUsers();
+  </script>
+  
+</body>
+
+</html>

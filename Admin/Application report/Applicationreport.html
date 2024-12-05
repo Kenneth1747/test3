@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="Applicationreport.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet" />
+  <title>Application Report</title>
+</head>
+
+<body>
+  <style>
+    .request-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .request-table th,
+    td {
+      padding: 8px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+
+    .request-table th {
+      background-color: #f4f4f4;
+    }
+
+    .request-table .action-btn {
+      padding: 5px 10px;
+      margin: 2px;
+      cursor: pointer;
+    }
+
+    .request-table .delete {
+      background-color: red;
+      border-radius: 5px;
+      border: none;
+      color: white;
+    }
+
+    .request-table .accept {
+      border-radius: 5px;
+      border: none;
+      background-color: #0c77a8;
+      color: white;
+    }
+
+    .accept:hover {
+      transform: scale(0.96);
+    }
+
+    .delete:hover {
+      transform: scale(0.96);
+    }
+  </style>
+
+  <div class="maincont">
+    <div class="nav">
+      <div class="imagecont">
+        <img src="DSWD-Logo-Icon.png" alt="" />
+      </div>
+
+      <div class="links">
+        <ul>
+          <li class="Dashboard">
+            <a href="../dashboards/Dashboard.html">
+              <div>
+                <img src="icons8-dashboard-48.png" alt="" />
+                <label for="">Dashboard</label>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="../Activity log/ActivityLog.html">
+              <div>
+                <img src="icons8-verified-account-48.png" alt="" />
+                <label for="">Activity Log</label>
+              </div>
+            </a>
+          </li>
+          <li class="highlight">
+            <a href="../Application report/Applicationreport.html">
+              <div>
+                <img src="icons8-system-task-48.png" alt="" />
+                <label for="">Application Report</label>
+              </div>
+            </a>
+          </li>
+          <li class="userManagement">
+            <a href="../UserManagement/Usernanagement.html">
+              <div>
+                <img src="icons8-user-secured-48.png" alt="" />
+                <label for="">User Management</label>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="/Admin/Payout Schedule/PayoutSchedule.html">
+              <div>
+                <img src="icons8-system-task-48.png" alt="" />
+                <label for="">Payout Schedule</label>
+              </div>
+            </a>
+          </li>
+
+          <li class="settings-link">
+            <div class="dd">
+              <img src="icons8-settings-48.png" alt="" /><label for=""> Settings</label>
+
+              <div class="dropdown-content">
+                <div>
+                  <a href="../Setting/PersonalDetails.html">Personal Details</a><br />
+                </div>
+                <div>
+                  <a href="../Setting/Aboutus.html">About Us</a><br />
+                </div>
+                <div>
+                  <a href="../Setting/Securitypolicy.html">Security Policy</a>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="logout">
+        <div>
+          <img src="icons8-logout-32.png" alt="" /><label for="">Logout</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="parent-cardcont">
+      <div class="title">
+        <div class="childtitle">
+          <p>APPLICATION REPORT</p>
+        </div>
+        <div class="button">
+          <div>
+            <p id="roleDisplay">Role</p> <!-- Dynamic role display -->
+          </div>
+          <div class="buttonimg">
+            <img src="icons8-admin-26.png" alt="" />
+          </div>
+        </div>
+      </div>
+
+      <div class="searchparent-container">
+        <div class="search-container">
+          <!-- Search icon -->
+          <img src="icons8-search-50.png" alt="Search Icon" class="search-icon" />
+
+          <!-- Search input field -->
+          <input type="text" class="search-input" placeholder="Search..." />
+        </div>
+
+        <div class="Searchbar-buttons">
+        <div class="Accepts"><a href="../Application report/Acceptedsample.html">Accepted Applicants</a></div>
+        <div class="Rejects"><a href="../Application report/RejectedApplications.html">Rejected Applicants</a></div>
+        </div>
+      </div>
+
+      <div class="maincardcont">
+        <div class="card-container">
+          <div class="overflowcont">
+            <table id="request-table" class="request-table">
+              <thead>
+                <tr>
+                  <th>Assistance Type</th>
+                  <th>ID</th>
+                  <th>Last Name</th>
+                  <th>First Name</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+
+          </div>
+        </div>
+          
+  <div class="card-container2" style=" overflow-y: auto;">
+    <style>
+    .card-container2::-webkit-scrollbar {
+
+      width: 10px; /* Scroll bar width */
+    }
+    
+    /* Thumb */
+    .card-container2::-webkit-scrollbar-thumb {
+      background: #8dbfd6; /* Color of the thumb */
+      border-radius: 5px; /* Round edges */
+    }
+    
+    /* Hover effect on thumb */
+    .card-container2::-webkit-scrollbar-thumb:hover {
+      background: #0c77a8;/* Darker color on hover */
+    }
+    
+    /* Track (Background) */
+    .card-container2::-webkit-scrollbar-track {
+      background: #f1f1f1; /* Track background color */
+      border-radius: 5px; /* Round edges for consistency */
+      height: 30%;
+     
+    }
+    </style>
+    <div class="profcont">
+      <div class="profileimg">
+        <img src="maxresdefault.jpg" alt="" id="profileImg"/>
+      </div>
+      <div class="btns">
+        <div id="governmentIdBtn" style="cursor: default;">
+          <p>Government ID</p>
+        </div>
+        <div id="additionalIdBtn" style="cursor: default;">
+          <p>Additional ID</p>
+        </div>
+      </div>
+    </div>
+    <div class="resident-id">
+      <div class="resident-id-child">
+        <div class="resident-id-div">
+          <label for="">Resident ID</label>
+        </div>
+        <div class="resident-id-div2">
+          <label for="" id="residentId">09123</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="overflowtable">
+      <div class="table">
+        <table class="information-table" id="informationTable">
+          <tr>
+            <td id="firsttd">Last Name</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td id="firsttd">First Name</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td id="firsttd">Middle Name</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td id="firsttd">Sex</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td id="firsttd">Religion</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td id="firsttd">Birth Place</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td id="firsttd">Date of Birth</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td id="firsttd">Phone</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td id="firsttd">Email</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td id="firsttd">Address</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td id="firsttd">Mother's Name</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td id="firsttd">Father's Name</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td id="firsttd">Assistance Type</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td id="firsttd">School Name</td>
+            <td></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+
+
+
+
+    </div>
+ 
+      </div>
+    </div>
+  </div>
+
+  <!-- Pop up boss -->
+  <div class="modal">
+    <div class="modal-content">
+      <span class="close-gov">&times;</span>
+      <img id="popupImage" alt="Government ID"/>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>©2024 All Rights Reserved </p>
+  </div>
+
+  <!-- Firebase Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+
+  <script>
+     document.addEventListener("DOMContentLoaded", () => {
+
+      const firebaseConfig = {
+      apiKey: "AIzaSyDiOsr6bY5BDKdiBPRzDgSpurHdkkUlc3k",
+      authDomain: "sia101-d60a1.firebaseapp.com",
+      databaseURL: "https://sia101-d60a1-default-rtdb.firebaseio.com",
+      projectId: "sia101-d60a1",
+      storageBucket: "sia101-d60a1.appspot.com",
+      messagingSenderId: "258109532727",
+      appId: "1:258109532727:web:73d735dc749d2cb4ebedb2",
+    };
+    const firebaseDatabase = firebase.initializeApp(firebaseConfig);
+    const database = firebaseDatabase.database();
+
+    // Role-based visibility and user identification
+    const userRole = sessionStorage.getItem("userRole");
+    const userName = sessionStorage.getItem("userName"); // Make sure userName is stored in sessionStorage
+
+    // Display role (Staff/Admin)
+    document.getElementById("roleDisplay").textContent = `${userRole}`;
+
+    // Hide User Management and Settings for Staff
+    if (userRole === "staff") {
+      const userManagementLink = document.querySelector(".userManagement");
+      const settingsLink = document.querySelector(".settings-link");
+
+      if (userManagementLink) userManagementLink.style.display = "none";
+      if (settingsLink) settingsLink.style.display = "none";
+    }
+
+    // Modal to view applicant details
+   const modal = document.querySelector(".modal");
+   const closeGovModal = document.querySelector(".close-gov");
+   const image = document.getElementById("popupImage");
+
+   closeGovModal.onclick = () => {
+    modal.style.display = "none";
+    };
+
+    function showGovernmentId(govIdUrl) {
+    image.src = govIdUrl || "../Admin imgs/default-gov-id.jpg"; 
+    modal.style.display = "block";
+    }
+
+     function showAdditionalId(govIdUrl) {
+    image.src = additionalDocument || "../Admin imgs/default-gov-id.jpg"; 
+    modal.style.display = "block";
+    }
+
+  // Function to populate the request table
+function populateRequestTable() {
+  const requestTableBody = document.querySelector("#request-table tbody");
+  requestTableBody.innerHTML = ""; // Clear the table before populating
+
+  const assistanceRef = database.ref("2-Assistance");
+  assistanceRef.once("value", (snapshot) => {
+    const data = snapshot.val();
+
+    if (!data) {
+      // If no data exists, display a message
+      const emptyRow = document.createElement("tr");
+      const emptyCell = document.createElement("td");
+      emptyCell.setAttribute("colspan", 6); // Adjust to match the number of table columns
+      emptyCell.textContent = "No applications found.";
+      emptyRow.appendChild(emptyCell);
+      requestTableBody.appendChild(emptyRow);
+      return;
+    }
+
+    // Iterate over the data and populate the table
+    Object.keys(data).forEach((key) => {
+      const requestItems = data[key];
+
+      const row = document.createElement("tr");
+
+      // Add Assistance Type column
+      const assistanceTypeCell = document.createElement("td");
+      assistanceTypeCell.textContent = requestItems.type || "N/A";
+
+      // Add ID column
+      const idCell = document.createElement("td");
+      idCell.textContent = key;
+
+      // Add Name columns
+      const fullNameCell = document.createElement("td");
+      fullNameCell.textContent = requestItems.lastName || "N/A";
+
+      const firstNameCell = document.createElement("td");
+      firstNameCell.textContent = requestItems.firstName || "N/A";
+
+      // Add Status column
+      const statusCell = document.createElement("td");
+      statusCell.textContent = requestItems.status || "Pending";
+
+      // Add Action buttons
+      const actionsCell = document.createElement("td");
+      const viewBtn = document.createElement("button");
+      viewBtn.classList.add("action-btn");
+      viewBtn.textContent = "View";
+      viewBtn.addEventListener("click", () => {
+        // Handle View button click
+        viewApplicantDetails(requestItems, key);
+      });
+
+      const acceptBtn = document.createElement("button");
+      acceptBtn.classList.add("action-btn", "accept");
+      acceptBtn.textContent = "Accept";
+      acceptBtn.addEventListener("click", () => {
+        handleAccept(key, requestItems.firstName + " " + requestItems.lastName);
+      });
+
+      const rejectBtn = document.createElement("button");
+      rejectBtn.classList.add("action-btn", "reject");
+      rejectBtn.textContent = "Reject";
+      rejectBtn.addEventListener("click", () => {
+        handleReject(key, requestItems.firstName + " " + requestItems.lastName);
+      });
+
+      actionsCell.appendChild(viewBtn);
+      actionsCell.appendChild(acceptBtn);
+      actionsCell.appendChild(rejectBtn);
+      row.appendChild(assistanceTypeCell);
+      row.appendChild(idCell);
+      row.appendChild(fullNameCell);
+      row.appendChild(firstNameCell);
+      row.appendChild(statusCell);
+      row.appendChild(actionsCell);
+
+      requestTableBody.appendChild(row);
+    });
+  });
+}
+
+
+
+
+
+
+
+
+
+
+    function viewApplicantDetails(requestItems, key) {
+      const residentRef = database.ref("Residents/" + key.slice(0, 12));
+      residentRef.once("value", (snapshot) => {
+        const data = snapshot.val();
+        const applicantDetails = document.getElementById("informationTable");
+        document.getElementById("governmentIdBtn").style = "cursor: pointer";
+        document.getElementById("additionalIdBtn").style = "cursor: pointer";
+        document.getElementById("residentId").textContent = key.slice(0, 12);
+        document.getElementById("profileImg").src = data.profileUrl || "../Admin imgs/maxresdefault.jpg";
+        document.getElementById('governmentIdBtn').addEventListener('click', () => showGovernmentId(data.validIdUrl));
+        document.getElementById('additionalIdBtn').addEventListener('click', () => showAdditionalId(data.additionalDocument));
+
+      applicantDetails.innerHTML = `
+      <tr><td id="firsttd">Last Name</td><td>${data.lastName}</td></tr>
+      <tr><td id="firsttd">First Name</td><td>${data.firstName}</td></tr>
+      <tr><td id="firsttd">Middle Name</td><td>${data.middleName}</td></tr>
+      <tr><td id="firsttd">Sex</td><td>${data.sex}</td></tr>
+      <tr><td id="firsttd">Religion</td><td>${data.religion}</td></tr>
+      <tr><td id="firsttd">Birth Place</td><td>${data.birthplace}</td></tr>
+      <tr><td id="firsttd">Date of Birth</td><td>${data.birthdate}</td></tr>
+      <tr><td id="firsttd">Phone</td><td>${data.mobileNumber}</td></tr>
+      <tr><td id="firsttd">Email</td><td>${data.email}</td></tr>
+      <tr><td id="firsttd">Address</td><td>${data.address}</td></tr>
+      <tr><td id="firsttd">Mother's Name</td><td>${data.motherFirstName} ${data.motherLastName}</td></tr>
+      <tr><td id="firsttd">Father's Name</td><td>${data.fatherFirstName} ${data.fatherLastName}</td></tr>
+      <tr><td id="firsttd">Assistance Type</td><td>${requestItems.type}</td></tr>
+      <tr><td id="firsttd">School Name</td><td>${requestItems.schoolName || ""}</td></tr>
+`;
+      })} 
+
+
+/// Function to save action to activity log
+function saveToActivityLog(action, residentName) {
+    const timestamp = new Date().toISOString();
+    const user = sessionStorage.getItem("userName") || "Unknown"; // Get the user who performed the action
+
+    // Reference to the activity-log in Firebase
+    const activityLogRef = database.ref("2-activity-log").push();
+
+    // Save the action details
+    activityLogRef.set({
+        residentName: residentName,
+        action: action,
+        user: user,
+        timestamp: timestamp,
+    })
+    .then(() => {
+        console.log(`${action} action logged successfully`);
+    })
+    .catch((error) => {
+        console.error("Error logging activity: ", error);
+    });
+}
+
+function handleAccept(applicationKey, residentName) {
+  // Save to activity log
+  saveToActivityLog("Accepted", residentName);
+
+  // Reference the application in "2-Assistance"
+  const applicationRef = database.ref("2-Assistance/" + applicationKey);
+
+  applicationRef.once("value", (snapshot) => {
+    const applicationData = snapshot.val();
+
+    if (applicationData) {
+      const assistanceType = applicationData.type || "Unknown";
+      
+      // Update the status to "Accepted" before moving it
+      const updatedData = {
+        ...applicationData, // Spread existing data
+        status: "Accepted", // Update the status
+      };
+
+      // Save the updated data to "2-Accepted-Applications"
+      const acceptedRef = database.ref(`2-Accepted-Applications/${assistanceType}/${applicationKey}`);
+      acceptedRef
+        .set(updatedData) // Save the updated data
+        .then(() => {
+          console.log(`Application ${applicationKey} moved to 2-Accepted-Applications with status 'Accepted'.`);
+          
+          // Remove the application from "2-Assistance"
+          return applicationRef.remove();
+        })
+        .then(() => {
+          console.log(`Application ${applicationKey} removed from 2-Assistance.`);
+        })
+        .catch((error) => {
+          console.error("Error moving application to Accepted:", error);
+        });
+    } else {
+      console.error("No application data found for key:", applicationKey);
+    }
+  });
+
+  // Optionally refresh the request table
+  window.location.reload();
+  populateRequestTable();
+}
+
+
+
+
+
+function handleReject(applicationKey, residentName) {
+  // Save to activity log
+  saveToActivityLog("Rejected", residentName);
+
+  // Reference the application in "2-Assistance"
+  const applicationRef = database.ref("2-Assistance/" + applicationKey);
+
+  applicationRef.once("value", (snapshot) => {
+    const applicationData = snapshot.val();
+
+    if (applicationData) {
+      const assistanceType = applicationData.type || "Unknown";
+      
+      // Update the status to "Reject" before moving it
+      const updatedData = {
+        ...applicationData, // Spread existing data
+        status: "Rejected", // Update the status
+      };
+
+      // Save the updated data to "2-Reject-Applications"
+      const rejectedRef = database.ref(`2-Rejected-Applications/${assistanceType}/${applicationKey}`);
+      rejectedRef
+        .set(updatedData) // Save the updated data
+        .then(() => {
+          console.log(`Application ${applicationKey} moved to 2-Rejected-Applications with status 'Rejected'.`);
+          
+          // Remove the application from "2-Assistance"
+          return applicationRef.remove();
+        })
+        .then(() => {
+          console.log(`Application ${applicationKey} removed from 2-Assistance.`);
+        })
+        .catch((error) => {
+          console.error("Error moving application to Rejected:", error);
+        });
+    } else {
+      console.error("No application data found for key:", applicationKey);
+    }
+  });
+
+  // Optionally refresh the request table
+  window.location.reload();
+  populateRequestTable();
+}
+
+
+
+
+
+
+    populateRequestTable();
+     });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="PayoutHistory.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet" />
+  <title>Payout History</title>
+</head>
+
+<body>
+  <div class="maincont">
+    <div class="nav">
+      <div class="imagecont">
+        <img src="/Images/DSWD-Logo-Icon.png" alt="" />
+      </div>
+
+      <div class="links">
+        <ul>
+          <li><a href="../dashboards/Dashboard.html"><img src="../Admin imgs/icons8-dashboard-48.png" alt="" /><label>Dashboard</label></a></li>
+          <li><a href="../Activity log/ActivityLog.html"><img src="../Admin imgs/icons8-verified-account-48.png" alt="" /><label>Activity Log</label></a></li>
+          <li class="highlight"><a href="../Application report/Applicationreport.html"><img src="../Admin imgs/icons8-system-task-48.png" alt="" /><label>Application Report</label></a></li>
+          <li><a href="../UserManagement/Usernanagement.html"><img src="../Admin imgs/icons8-user-secured-48.png" alt="" /><label>User Management</label></a></li>
+          <li><a href=""><img src="../Admin imgs/icons8-settings-48.png" alt="" /><label>Settings</label></a></li>
+        </ul>
+      </div>
+
+      <div class="logout">
+        <div><img src="../Admin imgs/icons8-logout-32.png" alt="" /><label>Logout</label></div>
+      </div>
+    </div>
+
+    <div class="parent-cardcont">
+      <div class="title">
+        <div class="childtitle"><p>Payout History</p></div>
+        <div class="button">
+          <div><p id="roleDisplay">Role</p></div>
+          <div class="buttonimg"><img src="../Admin imgs/icons8-admin-26.png" alt="" /></div>
+        </div>
+      </div>
+
+      <div class="searchparent-container">
+        <div class="search-container">
+          <img src="../Admin imgs/icons8-search-50.png" alt="Search Icon" class="search-icon" />
+          <input type="text" class="search-input" placeholder="Search by name or ID..." />
+        </div>
+
+        <div class="Searchbar-buttons">
+          <select id="assistanceTypeDropdown">
+            <option value="" disabled selected >Select Assistance Type</option>
+            <option value="AICS">Financial Assistance</option>
+            <option value="SCA">Senior Citizen</option>
+            <option value="EAR">Educational Assistance</option>
+            <option value="PWD">PWD</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="maincardcont">
+        <div class="card-container">
+          <!-- AICS Table -->
+          <div class="overflowcont" id="AICS" style="display: none;">
+            <h3>Financial Assistance History</h3>
+            <table class="request-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Contact</th>
+                  <th>Payout Amount</th>
+                  <th>Payout Date</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="FA-history"></tbody>
+            </table>
+          </div>
+
+          <!-- Repeat for other assistance types (SCA, EAR, PWD) -->
+          <div class="overflowcont" id="SCA" style="display: none;">
+            <h3>Senior Citizen History</h3>
+            <table class="request-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Contact</th>
+                  <th>Payout Amount</th>
+                  <th>Payout Date</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="SC-history"></tbody>
+            </table>
+          </div>
+
+          <!-- EAR Table -->
+          <div class="overflowcont" id="EAR" style="display: none;">
+            <h3>Educational Assistance History</h3>
+            <table class="request-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Contact</th>
+                  <th>Payout Amount</th>
+                  <th>Payout Date</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="EA-history"></tbody>
+            </table>
+          </div>
+
+          <!-- PWD Table -->
+          <div class="overflowcont" id="PWD" style="display: none;">
+            <h3>PWD Assistance History</h3>
+            <table class="request-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Contact</th>
+                  <th>Payout Amount</th>
+                  <th>Payout Date</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="PWD-history"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="upper-section">
+      <p>©2024 All Rights Reserved </p>
+    </div>
+
+    <div class="Lower-section">
+      <div class="first-section">
+        <p>DSWD - FAMS</p>
+      </div>
+      <div class="second-section">
+        <a href=""><p>Home</p></a>
+        <a href=""><p>About</p></a>
+        <a href=""><p>Contact</p></a>
+      </div>
+      <div class="third-section"></div>
+    </div>
+  </div>
+
+  <!-- Firebase Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDiOsr6bY5BDKdiBPRzDgSpurHdkkUlc3k",
+      authDomain: "sia101-d60a1.firebaseapp.com",
+      databaseURL: "https://sia101-d60a1-default-rtdb.firebaseio.com",
+      projectId: "sia101-d60a1",
+      storageBucket: "sia101-d60a1.appspot.com",
+      messagingSenderId: "258109532727",
+      appId: "1:258109532727:web:73d735dc749d2cb4ebedb2",
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
+    const assistanceTypes = ["AICS", "SCA", "EAR", "PWD"];
+    const tableBodies = {
+      AICS: document.getElementById("FA-history"),
+      SCA: document.getElementById("SC-history"),
+      EAR: document.getElementById("EA-history"),
+      PWD: document.getElementById("PWD-history"),
+    };
+
+    const payoutAmounts = {
+      AICS: 2000,
+      SCA: 2000,
+      EAR: 4000,
+      PWD: 2000
+    };
+
+    function loadPayoutHistory(type) {
+      const payoutRef = database.ref("Payout-History");
+
+      payoutRef.once("value", (snapshot) => {
+        const data = snapshot.val();
+        if (!data) {
+          console.log("No payout history data found");
+          return;
+        }
+
+        tableBodies[type].innerHTML = ""; // Clear table
+
+        Object.keys(data[type]).forEach(key => {
+          const payoutData = data[type][key];
+          const row = `
+            <tr>
+              <td>${key}</td>
+              <td>${payoutData.lastName || "N/A"}</td>
+              <td>${payoutData.firstName || "N/A"}</td>
+              <td>${payoutAmounts[type]}</td>
+              <td>${new Date(payoutData.payoutDate).toLocaleDateString()}</td>
+              <td>${payoutData.status || "Paid"}</td>
+            </tr>`;
+          tableBodies[type].innerHTML += row;
+        });
+      });
+    }
+
+    document.getElementById("assistanceTypeDropdown").addEventListener("change", (e) => {
+      const selectedType = e.target.value;
+
+      if (selectedType) {
+        assistanceTypes.forEach((type) => {
+          const tableElement = document.getElementById(type);
+          tableElement.style.display = type === selectedType ? "block" : "none";
+        });
+
+        loadPayoutHistory(selectedType);
+      }
+    });
+
+    // Prevent applicants from reapplying within 3 months of being paid
+    function preventReapply(applicantId) {
+      const applicantRef = database.ref(`Payout-History/${applicantId}`);
+      applicantRef.once("value", (snapshot) => {
+        const payoutData = snapshot.val();
+        if (payoutData) {
+          const lastPayoutDate = new Date(payoutData.payoutDate);
+          const currentDate = new Date();
+          const diffTime = Math.abs(currentDate - lastPayoutDate);
+          const diffMonths = diffTime / (1000 * 60 * 60 * 24 * 30); // Convert to months
+
+          if (diffMonths < 3) {
+            console.log("Applicant is within the 3-month block period");
+            // Show message to prevent reapplication
+          }
+        }
+      });
+    }
+
+    // Call preventReapply when applicants try to apply
+    preventReapply("applicantId"); // Call with the actual applicant ID
+  </script>
+</body>
+</html>
